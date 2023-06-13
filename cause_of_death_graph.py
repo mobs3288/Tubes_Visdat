@@ -32,7 +32,13 @@ source = ColumnDataSource(data={
 })
 
 # Membuat plot awal
-plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths')
+plot = figure(
+    title='Cause of Death',
+    x_axis_label='Year',
+    y_axis_label='Number of Deaths',
+    plot_width=1000,  # Adjust the width to 100% of available space
+    plot_height=600,  # Adjust the height to 100% of available space
+)
 
 # Membuat glyph Circle untuk negara pertama
 circle1 = plot.circle(x='x', y='y', source=source, fill_alpha=0.8, size=8, color='blue')
@@ -117,4 +123,4 @@ if st.button('Update Plot'):
 html = file_html(plot, CDN, "Cause of Death Plot")
 
 # Menampilkan plot menggunakan komponen HTML
-st.components.v1.html(html, width=1800, height=400)
+st.components.v1.html(html, width=1000, height=600)  # Adjust the width and height to 100% of available space
