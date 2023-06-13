@@ -2,7 +2,7 @@ import pandas as pd
 from bokeh.plotting import figure, curdoc
 from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend, LegendItem
 from bokeh.palettes import Spectral6
-from bokeh.layouts import widgetbox, row
+from bokeh.layouts import column, row
 from bokeh.models import Select
 import subprocess
 
