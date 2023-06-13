@@ -111,5 +111,5 @@ update_plot(country_select1, country_select2, disease_select)
 if st.button('Update Plot'):
     update_plot(country_select1, country_select2, disease_select)
 
-# Menampilkan plot menggunakan Streamlit
-st.bokeh_chart(plot)
+# Menampilkan plot
+st.write(plot)
