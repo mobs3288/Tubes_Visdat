@@ -12,7 +12,7 @@ import pandas as pd
 st.set_page_config(page_title="TUGAS BESAR VISUALISASI DATA")
 
 # Set author names
-author_names = "- Ryan Oktaviandi Susilo (1301204289)\n - Muhammad Khalid Habuburahman (1301204437)"
+author_names = "Ryan Oktaviandi Susilo (1301204289) and Muhammad Khalid Habuburahman (1301204437)"
 
 # Add title and author names
 st.title("TUGAS BESAR VISUALISASI DATA")
