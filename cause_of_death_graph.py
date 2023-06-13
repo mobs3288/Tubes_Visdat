@@ -30,7 +30,7 @@ source = ColumnDataSource(data={
 })
 
 # Membuat plot awal
-plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths', plot_height=600, plot_width=1000)
+plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths')
 
 # Membuat glyph Circle untuk negara pertama
 circle1 = plot.circle(x='x', y='y', source=source, fill_alpha=0.8, size=8, color='blue')
@@ -91,14 +91,6 @@ def update_plot(selected_country1, selected_country2, selected_disease):
     # Membuat legend baru
     legend.items = [(selected_country1, [circle1]), (selected_country2, [circle2])]
     plot.add_layout(legend)
-
-# Membaca data
-data = pd.read_csv("cause_of_deaths.csv")
-
-# Mendapatkan daftar negara, penyakit, dan tahun unik
-country_list = data["Country"].unique().tolist()
-disease_list = data.columns[3:].tolist()
-year_list = data["Year"].unique().tolist()
 
 # Membuat dropdown untuk memilih negara pertama
 country_select1 = st.selectbox('Country 1', country_list, index=0)
