@@ -21,6 +21,22 @@ st.markdown(f"<div style='text-align: left;'>{author_names}</div>", unsafe_allow
 # Add small text
 st.markdown("IF-43-PIL-DS02")
 
+# Add custom CSS style
+st.markdown(
+    """
+    <style>
+    body {
+        background-image: url('https://img.okezone.com/content/2023/04/06/206/2794243/film-shrek-5-segera-diproduksi-dengan-pengisi-suara-yang-sama-ddbGaVzliS.jpg');
+        background-size: cover;
+    }
+    .stApp {
+        zoom: 0.8;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Membaca data
 data = pd.read_csv("cause_of_deaths.csv")
 
