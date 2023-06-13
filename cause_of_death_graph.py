@@ -32,7 +32,7 @@ source = ColumnDataSource(data={
 })
 
 # Membuat plot awal
-plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths' , plot_height=800, plot_width=1200)
+plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths' , height=800, width=1200)
 
 # Membuat glyph Circle untuk negara pertama
 circle1 = plot.circle(x='x', y='y', source=source, fill_alpha=0.8, size=8, color='blue')
