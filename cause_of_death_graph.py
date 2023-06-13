@@ -1,9 +1,10 @@
-import pandas as pd
-from bokeh.plotting import figure, curdoc
-from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend, LegendItem
-from bokeh.palettes import Spectral6
-from bokeh.layouts import widgetbox, row
+import streamlit as st
 from bokeh.models import Select
+from bokeh.layouts import column
+from bokeh.plotting import figure
+from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend
+from bokeh.palettes import Spectral6
+import pandas as pd
 
 # Membaca data
 data = pd.read_csv("cause_of_deaths.csv")
@@ -56,22 +57,10 @@ circle2_hover_tool = HoverTool(renderers=[circle2], tooltips=[('Country', '@coun
 plot.add_tools(hover_tool, circle1_hover_tool, circle2_hover_tool)
 
 # Mengupdate ColumnDataSource dan plot saat nilai dropdown berubah
-def update_plot(attr, old, new):
-    selected_country1 = country_select1.value
-    selected_disease = disease_select.value
-    
-    # Mengambil daftar negara yang tersedia untuk dipilih di country_select2
-    available_countries = [country for country in country_list if country != selected_country1]
-    
-    # Memperbarui opsi dropdown untuk memilih negara kedua
-    country_select2.options = available_countries
-    
-    # Memeriksa apakah negara yang dipilih di country_select1 juga dipilih di country_select2
-    selected_country2 = country_select2.value
-    if selected_country2 == selected_country1:
-        # Jika ya, atur negara kedua sebagai negara pertama yang tersedia
-        selected_country2 = available_countries[0]
-        country_select2.value = selected_country2
+@st.cache
+def update_plot(selected_country1, selected_country2, selected_disease):
+    selected_country1 = str(selected_country1)
+    selected_country2 = str(selected_country2)
     
     # Memfilter data sesuai dengan pilihan pengguna
     filtered_data1 = data[(data["Country"] == selected_country1)]
@@ -103,23 +92,32 @@ def update_plot(attr, old, new):
     legend.items = [(selected_country1, [circle1]), (selected_country2, [circle2])]
     plot.add_layout(legend)
 
+# Membaca data
+data = pd.read_csv("cause_of_deaths.csv")
+
+# Mendapatkan daftar negara, penyakit, dan tahun unik
+country_list = data["Country"].unique().tolist()
+disease_list = data.columns[3:].tolist()
+year_list = data["Year"].unique().tolist()
+
 # Membuat dropdown untuk memilih negara pertama
-country_select1 = Select(options=country_list, value=country_list[0], title='Country 1')
-country_select1.on_change('value', update_plot)
+country_select1 = st.selectbox('Country 1', country_list, index=0)
+
+# Mengambil daftar negara yang tersedia untuk dipilih di country_select2
+available_countries = [country for country in country_list if country != country_select1]
 
 # Membuat dropdown untuk memilih negara kedua
-country_select2 = Select(options=country_list, value=country_list[1], title='Country 2')
-country_select2.on_change('value', update_plot)
+country_select2 = st.selectbox('Country 2', available_countries, index=1)
 
 # Membuat dropdown untuk memilih penyakit
-disease_select = Select(options=disease_list, value=disease_list[0], title='Disease')
-disease_select.on_change('value', update_plot)
+disease_select = st.selectbox('Disease', disease_list, index=0)
 
 # Menginisialisasi plot dengan nilai awal
-update_plot(None, None, None)
+update_plot(country_select1, country_select2, disease_select)
 
-# Menyusun layout
-layout = row(widgetbox(country_select1, country_select2, disease_select), plot)
+# Mengupdate plot saat nilai dropdown berubah
+if st.button('Update Plot'):
+    update_plot(country_select1, country_select2, disease_select)
 
-# Menambahkan layout ke current document
-curdoc().add_root(layout)
+# Menampilkan plot menggunakan Streamlit
+st.bokeh_chart(plot)
