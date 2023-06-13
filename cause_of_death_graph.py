@@ -8,6 +8,19 @@ from bokeh.embed import file_html
 from bokeh.resources import CDN
 import pandas as pd
 
+# Set Streamlit title and page config
+st.set_page_config(page_title="TUGAS BESAR VISUALISASI DATA")
+
+# Set author names
+author_names = "- Ryan Oktaviandi Susilo (1301204289)\n- Muhammad Khalid Habuburahman (1301204437)"
+
+# Add title and author names
+st.title("TUGAS BESAR VISUALISASI DATA")
+st.markdown(f"<div style='text-align: left;'>{author_names}</div>", unsafe_allow_html=True)
+
+# Add small text
+st.markdown("IF-43-PIL-DS02")
+
 # Membaca data
 data = pd.read_csv("cause_of_deaths.csv")
 
