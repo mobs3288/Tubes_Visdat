@@ -2,7 +2,7 @@ import pandas as pd
 from bokeh.plotting import figure, curdoc
 from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend, LegendItem
 from bokeh.palettes import Spectral6
-from bokeh.layouts import widgetbox, row
+from bokeh.layouts import column, row
 from bokeh.models import Select
 
 # Membaca data
@@ -119,7 +119,7 @@ disease_select.on_change('value', update_plot)
 update_plot(None, None, None)
 
 # Menyusun layout
-layout = row(widgetbox(country_select1, country_select2, disease_select), plot)
+layout = column(country_select1, country_select2, disease_select, plot)
 
 # Menambahkan layout ke current document
 curdoc().add_root(layout)
