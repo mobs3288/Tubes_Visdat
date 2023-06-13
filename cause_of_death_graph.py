@@ -4,6 +4,8 @@ from bokeh.layouts import column
 from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend
 from bokeh.palettes import Spectral6
+from bokeh.embed import file_html
+from bokeh.resources import CDN
 import pandas as pd
 
 # Membaca data
@@ -111,5 +113,8 @@ update_plot(country_select1, country_select2, disease_select)
 if st.button('Update Plot'):
     update_plot(country_select1, country_select2, disease_select)
 
-# Menampilkan plot
-print(plot)
+# Mengubah plot menjadi file HTML
+html = file_html(plot, CDN, "Cause of Death Plot")
+
+# Menampilkan plot menggunakan komponen HTML
+st.components.v1.html(html)
