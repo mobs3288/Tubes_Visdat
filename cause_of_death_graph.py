@@ -4,10 +4,6 @@ from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Le
 from bokeh.palettes import Spectral6
 from bokeh.layouts import column, row
 from bokeh.models import Select
-import subprocess
-
-# Install bokeh using pip
-subprocess.check_call(['pip', 'install', 'bokeh'])
 
 # Membaca data
 data = pd.read_csv("cause_of_deaths.csv")
