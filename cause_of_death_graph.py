@@ -21,18 +21,6 @@ st.markdown(f"<div style='text-align: left;'>{author_names}</div>", unsafe_allow
 # Add small text
 st.markdown("IF-43-PIL-DS02")
 
-# Add custom CSS style
-st.markdown(
-    """
-    <style>
-    .stApp {
-        zoom: 0.7;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Membaca data
 data = pd.read_csv("cause_of_deaths.csv")
 
