@@ -27,7 +27,7 @@ st.markdown(
     <style>
     body {
         background-image: url('https://img.okezone.com/content/2023/04/06/206/2794243/film-shrek-5-segera-diproduksi-dengan-pengisi-suara-yang-sama-ddbGaVzliS.jpg');
-        background-size: cover;
+        #background-size: cover;
     }
     .stApp {
         zoom: 0.8;
