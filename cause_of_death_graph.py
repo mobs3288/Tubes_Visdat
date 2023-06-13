@@ -26,7 +26,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        zoom: 0.5;
+        zoom: 0.7;
     }
     </style>
     """,
