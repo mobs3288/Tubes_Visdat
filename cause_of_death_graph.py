@@ -112,4 +112,4 @@ if st.button('Update Plot'):
     update_plot(country_select1, country_select2, disease_select)
 
 # Menampilkan plot
-st.write(plot)
+st.bokeh_chart(plot)
