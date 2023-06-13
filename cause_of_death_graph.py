@@ -117,4 +117,4 @@ if st.button('Update Plot'):
 html = file_html(plot, CDN, "Cause of Death Plot")
 
 # Menampilkan plot menggunakan komponen HTML
-st.components.v1.html(html)
+st.components.v1.html(html, width=1000, height=600)
