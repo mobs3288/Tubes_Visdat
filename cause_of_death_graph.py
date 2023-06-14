@@ -1,5 +1,5 @@
 import streamlit as st
-from bokeh.models import Select, Slider
+from bokeh.models import Select, RangeSlider
 from bokeh.layouts import column
 from bokeh.plotting import figure
 from bokeh.models import HoverTool, ColumnDataSource, CategoricalColorMapper, Legend
@@ -73,9 +73,10 @@ plot.add_tools(hover_tool, circle1_hover_tool, circle2_hover_tool)
 
 # Mengupdate ColumnDataSource dan plot saat nilai dropdown berubah
 @st.cache
-def update_plot(selected_country1, selected_country2, selected_disease, start_year, end_year):
+def update_plot(selected_country1, selected_country2, selected_disease, year_range):
     selected_country1 = str(selected_country1)
     selected_country2 = str(selected_country2)
+    start_year, end_year = year_range
     
     # Memfilter data sesuai dengan pilihan pengguna
     filtered_data1 = data[(data["Country"] == selected_country1) & (data["Year"] >= start_year) & (data["Year"] <= end_year)]
@@ -120,15 +121,14 @@ country_select2 = st.selectbox('Country 2', available_countries, index=1)
 disease_select = st.selectbox('Disease', disease_list, index=0)
 
 # Membuat slider untuk memilih tahun
-start_year = st.slider('Start Year', min_value=min(year_list), max_value=2019, value=min(year_list))
-end_year = st.slider('End Year', min_value=start_year, max_value=2019, value=2019)
+year_range = st.slider('Year Range', min_value=min(year_list), max_value=2019, value=(min(year_list), 2019))
 
 # Menginisialisasi plot dengan nilai awal
-update_plot(country_select1, country_select2, disease_select, start_year, end_year)
+update_plot(country_select1, country_select2, disease_select, year_range)
 
 # Mengupdate plot saat nilai dropdown atau slider berubah
 if st.button('Update Plot'):
-    update_plot(country_select1, country_select2, disease_select, start_year, end_year)
+    update_plot(country_select1, country_select2, disease_select, year_range)
 
 # Mengubah plot menjadi file HTML
 html = file_html(plot, CDN, "Cause of Death Plot")
