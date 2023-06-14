@@ -82,6 +82,10 @@ def update_plot(selected_country1, selected_country2, selected_disease, year_ran
     filtered_data1 = data[(data["Country"] == selected_country1) & (data["Year"] >= start_year) & (data["Year"] <= end_year)]
     filtered_data2 = data[(data["Country"] == selected_country2) & (data["Year"] >= start_year) & (data["Year"] <= end_year)]
     
+    # Mengurutkan data berdasarkan tahun
+    filtered_data1 = filtered_data1.sort_values(by='Year')
+    filtered_data2 = filtered_data2.sort_values(by='Year')
+    
     # Memperbarui data pada ColumnDataSource
     source.data = {
         'x': filtered_data1["Year"],
