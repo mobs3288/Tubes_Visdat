@@ -45,23 +45,31 @@ source = ColumnDataSource(data={
 })
 
 # Membuat plot awal
-plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths', x_range=year_list, plot_height=400)
+plot = figure(title='Cause of Death', x_axis_label='Year', y_axis_label='Number of Deaths')
 
-# Membuat glyph VBar untuk negara pertama
-vbar1 = plot.vbar(x='x', top='y', width=0.8, source=source, fill_alpha=0.8, color='blue')
+# Membuat glyph Circle untuk negara pertama
+circle1 = plot.circle(x='x', y='y', source=source, fill_alpha=0.8, size=8, color='blue')
 
-# Membuat glyph VBar untuk negara kedua
-vbar2 = plot.vbar(x='x2', top='y2', width=0.8, source=source, fill_alpha=0.8, color='red')
+# Membuat glyph Circle untuk negara kedua
+circle2 = plot.circle(x='x2', y='y2', source=source, fill_alpha=0.8, size=8, color='red')
 
 # Membuat legend di luar plot
 legend = Legend(items=[], location="top_right")
 plot.add_layout(legend, 'right')
 
 # Membuat tooltips untuk HoverTool
-hover_tool = HoverTool(renderers=[vbar1, vbar2], tooltips=[('Country', '@country'), ('Year', '@year'), ('Number of Deaths', '@y')])
+hover_tool = HoverTool(tooltips=[('Country', ''), ('Year', ''), ('Number of Deaths', '')])
 
-# Menambahkan tooltips ke plot
-plot.add_tools(hover_tool)
+# Menambahkan kondisi untuk tooltips
+hover_tool.renderers = [circle1, circle2]
+hover_tool.point_policy = 'snap_to_data'
+
+# Membuat tooltips khusus untuk setiap negara
+circle1_hover_tool = HoverTool(renderers=[circle1], tooltips=[('Country', '@country'), ('Year', '@year'), ('Number of Deaths', '@y')])
+circle2_hover_tool = HoverTool(renderers=[circle2], tooltips=[('Country', '@country2'), ('Year', '@year'), ('Number of Deaths', '@y2')])
+
+# Menambahkan tooltips khusus ke plot
+plot.add_tools(hover_tool, circle1_hover_tool, circle2_hover_tool)
 
 # Mengupdate ColumnDataSource dan plot saat nilai dropdown berubah
 @st.cache
@@ -101,7 +109,7 @@ def update_plot(selected_country1, selected_country2, selected_disease, year_ran
     plot.renderers = [r for r in plot.renderers if not isinstance(r, Legend)]
     
     # Membuat legend baru
-    legend.items = [(selected_country1, [vbar1]), (selected_country2, [vbar2])]
+    legend.items = [(selected_country1, [circle1]), (selected_country2, [circle2])]
     plot.add_layout(legend)
 
 # Membuat dropdown untuk memilih negara pertama
@@ -130,4 +138,4 @@ if st.button('Update Plot'):
 html = file_html(plot, CDN, "Cause of Death Plot")
 
 # Menampilkan plot menggunakan komponen HTML
-st.components.v1.html(html, width=1200, height=600)
+st.components.v1.html(html, width=1200, height=1000)
